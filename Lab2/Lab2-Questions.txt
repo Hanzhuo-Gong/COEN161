@@ -1,0 +1,14 @@
+What HTML tag do you use for links?
+<a href=""></a>
+
+What is the CSS to define a container as a flexbox?
+First we need to define display:flex, then we define flex-direction to determine if we want elements to be row or column.
+
+
+What is the difference between the main axis and cross axis in a flexbox?
+The main axis we can defined as row, column, row-reverse and column-reverse to set up the layout we want. Cross axis perpendicular to the main axis, so if main is row, cross axis will be column.
+
+How do you define a CSS selector for ids, classes, and elements? 
+Id: #idName
+classes: .className
+Elements: <elements tag> (ex <p>)
