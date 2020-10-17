@@ -1,15 +1,6 @@
 const undoStackContainer = document.getElementById("undo-stack");
 const redoStackContainer = document.getElementById("redo-stack");
 
-//const undoStackContainer = document.getElementById("undo-button");
-//const redoStackContainer = document.getElementById("redo-button");
-
-console.log("undo Container: ");
-console.log(undoStackContainer);
-
-console.log("redo Container: ");
-console.log(redoStackContainer);
-
 const undoButton = document.getElementById("undo-button");
 const redoButton = document.getElementById("redo-button");
 
@@ -44,28 +35,24 @@ const COLORS = [
  *
  */
 function handleGridButtonClick(event) {
+  //get the event number, and set up a random background
   let currentEventText = event.textContent;
   let randomNumber = Math.floor(Math.random() * COLORS.length);
   let randomColor = COLORS[randomNumber];
 
+  //create a new element with the event number
+  const newDiv = document.createElement("div");
+  const newContent = document.createTextNode(currentEventText);
+  newDiv.style.backgroundColor = event.style.backgroundColor;
+  newDiv.appendChild(newContent);
+
+  //append div to the undo section
+  undoButton.appendChild(newDiv);
+  undoStack.push(newDiv);
+
   //change the background color of the event
   event.style.backgroundColor = randomColor;
 
-  let test = window.getComputedStyle(event);
-  console.log(test.backgroundColor);
-  //console.log("randomNumber: " + randomNumber);
-  //console.log("I got clicked: " + event.innerHTML);
-  //console.log("text content: " + event.textContent);
-
-  //append div to the undo section
-  const newDiv = document.createElement("div");
-  const newContent = document.createTextNode(currentEventText);
-  newDiv.appendChild(newContent);
-
-  undoButton.appendChild(newDiv);
-  undoStack.push(newDiv);
-  console.log(undoStack);
-  //newDiv.style.backgroundColor = randomColor;
 }
 
 /**
@@ -82,25 +69,66 @@ function handleGridButtonClick(event) {
  *
  */
 function handleStackButtonClicked(fromStack, toStack) {
+  //undo event
   if (fromStack.id === "undo-button") {
-    console.log("Undo got clicked");
 
-    let popItem = undoStack.pop();
-    let test = window.getComputedStyle(popItem);
-    //console.log(test);
-    //test.backgroundColor = "red";
-    //console.log(test.backgroundColor);
+    //pop the item out
+    if (undoStack.size() === 0 ){
+      console.log("empty undo stack, can not pop");
+    }
+    else {
+      let popItem = undoStack.pop();
+      let popAttribute = window.getComputedStyle(popItem);
+      let popBackgroundColor = popAttribute.backgroundColor;
 
-    redoStack.push(popItem);
+      //find out which number and the background color got pop
+      let popNumber = popItem.textContent;
+      let buttonBackgroundColor = gridButtons[popNumber].style.backgroundColor;
+
+      //append the pop item to redo
+      popItem.style.backgroundColor = buttonBackgroundColor;
+      redoButton.appendChild(popItem);
+      redoStack.push(popItem);
+
+      //After appending uodo to redo, undo the event background color
+      //check if the background is rgba(0, 0, 0, 0) (white), if so, change the background color to #eee, rgba(238, 238, 238, 1)
+      if (popBackgroundColor === "rgba(0, 0, 0, 0)") {
+        gridButtons[popNumber].style.backgroundColor = "rgba(238, 238, 238, 1)";
+      }
+      else {
+        gridButtons[popNumber].style.backgroundColor = popBackgroundColor;
+      }
+
+    }
 
 
-    console.log("Undo stack:");
-    console.log(undoStack);
-    console.log("redo stack:");
-    console.log(redoStack);
   }
+  //redo event
   else {
-    console.log("redo got clicked");
+
+    //pop the redo items
+    if (redoStack.size() === 0) {
+      console.log("empty redo stack, can not pop");
+    }
+    else {
+      let popItem = redoStack.pop();
+      let redoArribute = window.getComputedStyle(popItem);
+      //background color of the redo item
+      let redoBackgroundColor = redoArribute.backgroundColor;
+
+      //get the current background color of the number
+      let popNumber = popItem.textContent;
+      let buttonBackgroundColor = gridButtons[popNumber].style.backgroundColor;
+
+      //append the redo item to pop
+      popItem.style.backgroundColor = buttonBackgroundColor;
+      undoButton.appendChild(popItem);
+      undoStack.push(popItem);
+
+      //redo the background color of the target
+      gridButtons[popNumber].style.backgroundColor = redoBackgroundColor;
+    }
+
   }
 }
 
@@ -117,7 +145,6 @@ function main() {
     // attach event handlers here
     for (var i = 0; i < gridButtons.length; i++) {
       gridButtons[i].addEventListener("click", function() {
-        //console.log(allButtons[i].innerHTML);
         handleGridButtonClick(this);
       });
     }
@@ -125,8 +152,6 @@ function main() {
     //let undoButton = document.getElementById("undo-button");
     //let redoButton = document.getElementById("redo-button");
 
-    //console.log("undobutton:")
-    //console.log(undoButton);
     undoButton.addEventListener("click", function() {
       handleStackButtonClicked(undoButton,redoButton);
     });
