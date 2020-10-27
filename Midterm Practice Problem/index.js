@@ -1,3 +1,109 @@
+const allButtons = document.querySelectorAll('button');
+const PASSCODE = '1022';
+
+//add data attributes
+for(i = 0; i<allButtons.length; i++) {
+  allButtons[i].dataset.value = allButtons[i].innerHTML;
+  //console.log(allButtons[i].dataset.value);
+}
+
+//return current HTML value
+function innerHTMLValue() {
+  return document.querySelector('input').innerHTML;
+}
+
+
+//set the value of input
+function setInputValue(string) {
+  let result = document.querySelector('input').innerHTML;
+  result = string;
+}
+
+
+//Problem: I think I still get the problem that the string can not be motified,
+// which I can't change the innerHTML of input,so I can't move further
+function handleClicked(event) {
+  event.style.color = "white";
+  event.style.backgroundColor = "#9b69b6";
+
+  //set up values
+  let inputPass = document.querySelector('input');
+  let inputPassLength = inputPass.innerHTML.length;
+  let previousInputValue = innerHTMLValue();
+  console.log("previous: " + previousInputValue);
+  let inputPassContent = inputPass.innerHTML;
+  let buttonValue = event.innerHTML;
+  //console.log(currentNumber);
+  console.log(inputPassContent);
+
+
+  //if length is less than 4, return pres + button value
+  if(inputPassLength < 4) {
+
+    //remove the class of success and error
+    document.querySelector('input').classList.remove("success");
+    document.querySelector('input').classList.remove("error");
+    //combine the string
+    let conString = previousInputValue + buttonValue;
+    //Set up the new input value
+    setInputValue(conString);
+    previousInputValue = conString;
+    console.log(previousInputValue);
+    //previousInputValue = inputPass.innerHTML;
+
+  }
+
+  //if the length is 4, check if is success or error
+  if (inputPass.innerHTML.length === 4) {
+    if (inputPass.innerHTML === PASSCODE) {
+      document.querySelector('input').classList.add("success");
+    }
+    else {
+      document.querySelector('input').classList.add("error");
+    }
+  }
+
+
+
+
+
+}
+//add event listener for buttons
+for(i = 0; i<allButtons.length; i++) {
+  allButtons[i].addEventListener('click', function() {
+    handleClicked(this);
+  })
+
+}
+
+/*
+const combineStanzas = () => {
+  // fill in this function
+  // type your response here
+  return
+
+
+}
+
+const stanzas = [
+    'A hundred point test',
+    'with all your skill and wisdom',
+    "you don't need no luck"
+]
+
+
+const haiku = stanzas.reduce(combineStanzas, "")
+console.log(haiku);
+//console.log(haiku.join('\n'))
+*/
+
+/* EXPECTED OUTPUT
+A hundred point test
+With all your skill and wisdom
+You don't need no luck
+*/
+
+
 /*
 //Query all the button
 const allButtons = document.querySelectorAll('button');
@@ -238,4 +344,20 @@ unless(n % 2 == 1, () => {
 });
 
 unless();
+*/
+
+/*
+let flattened = [[0, 1], [2, 3], [4, 5]].reduce(
+  ( accumulator, currentValue ) => accumulator.concat(currentValue),
+  []
+)
+
+console.log(flattened);
+
+let arrays = [[1, 2, 3], [4, 5], [6]];
+const flatten = (arrays) => {
+  return arrays.reduce((accumulator, array) => accumulator.concat(array), [])
+}
+
+console.log(flatten(arrays));
 */
