@@ -1,0 +1,13 @@
+How do you center elements using flexbox?
+display: flex;
+align-items: center;
+justify-content: center;
+
+How do you generate a random number in JavaScript?
+we need to use the Math.random()
+
+What is an API?
+API stands for application programming interface, it mainly use to make different programming languages to communicate with each other.
+
+How do you use Fetch in JavaScript?
+You can call fetch("URL", additonal information) to requests. The default request is get.

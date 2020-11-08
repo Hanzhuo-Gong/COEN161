@@ -1,0 +1,11 @@
+What is the difference between margin and padding?
+-Margin is the space around an element and the padding is the space of the an element's content. 
+
+What is the default value of the Flexbox property flex-flow?
+-row nowrap
+
+What value do variables have if they have been declared but have not been given any value?
+-undefine
+
+What is 'this' keyword in JavaScript?
+this refers to the object it belongs to.

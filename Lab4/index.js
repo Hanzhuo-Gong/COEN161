@@ -7,6 +7,10 @@ fetch("https://xkcd.now.sh/?comic=latest")
 .then(response => response.json())
 .then(data =>  {
   maxLength = data.num;
+  return maxLength;
+})
+.then(length => {
+  console.log(length);
 });
 
 //This value is not update in here, but updated in the handleClicked function. Why?
@@ -82,7 +86,7 @@ function updateContent(sampleURL) {
 //handler for button clicked
 function handleClicked(event) {
   //console.log("currentNum is: " + currentNum);
-  //console.log("maxLength is: " + maxLength);
+  console.log("maxLength is: " + maxLength);
   //get the current path comic value
   let paramsString = new URLSearchParams(window.location.search);
   let searchParams = new URLSearchParams(paramsString);

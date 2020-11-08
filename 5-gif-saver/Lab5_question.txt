@@ -1,0 +1,11 @@
+What function do you use to access outside libraries?
+-require
+
+What error codes did you use and when did you use them?
+-error code starts with 400, 404 is the most frequently use one. We can use when requests throw errors.
+
+How do you add to the res.app.locals array.reactions array when adding a gif?
+-we can use push to add element to array.
+
+What does the -d flag allow you to do in a curl command?
+- -d stands for data,which all specified data in a POST request to the HTTP server.
