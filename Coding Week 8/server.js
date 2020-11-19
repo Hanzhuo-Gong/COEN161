@@ -20,7 +20,9 @@ const getLists = (req, res) => {
 const addToDo = (req, res) => {
 
   console.log(req);
-  const data = {title: req.body.title}
+  //const data = {title: req.body.title}
+  const data = req.body.title;
+  const dataJson = {title: req.body.title}
   console.log(data);
 
   res.app.locals.reactions["todo"].push(data);
@@ -35,10 +37,10 @@ const addToDo = (req, res) => {
   fs.writeFile('./database/todo.json', stringList, (err) => {
     if (err) {throw err;}
     //send back the data //sendJSON
-    else {res.status(201).sendJSON(data);}
+    //else {res.status(201).sendJSON(data);}
   });
 
-  //res.status(200).send("Succeced!\n");
+  res.status(201).send(dataJson);
 
 }
 

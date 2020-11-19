@@ -43,8 +43,20 @@ window.onload = () => {
         //.then((response) => response.json());
         .then((response) => (response.ok && response.status === 201 ? response.json() : Promise.reject(response.status)))
         .then((data) => {
-          console.log("hi");
-          console.log(data);
+          //store the send back data to a variable
+          const jsonContent = data["title"];
+          //console.log(jsonContent);
+
+          //Need to append the data to the HTML
+          //so the user will see the update of the todo list
+          const newParagraph = document.createElement("p");
+          const newContent = document.createTextNode(jsonContent);
+
+          newParagraph.appendChild(newContent);
+          todoContent.appendChild(newParagraph);
+
+          //Empty the input content, so user don't need to manually delete it
+          todoInputBox.value = "";
         })
         .catch((err) => console.log(err));
 
