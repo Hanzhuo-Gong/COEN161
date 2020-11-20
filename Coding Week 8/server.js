@@ -68,6 +68,24 @@ const main = () => {
       });
     });
 
+
+    //this function will periodcally write all the todo
+    function periodicallyUpdate() {
+      const updateFile = app.locals.todo;
+      const stringList = JSON.stringify(updateFile);
+
+      fs.writeFile('./database/todo.json', stringList, (err) => {
+        if (err) {throw err;}
+
+      });
+      console.log("succeed");
+      console.log(updateFile);
+    }
+    //Periodically saves all TODOs to a file.
+    setInterval(periodicallyUpdate, 3000);
+
 };
+
+
 
 main();
