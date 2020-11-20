@@ -1,16 +1,9 @@
 const express = require('express')
 const fs = require('fs').promises;
 
-/*
-//Initialize the with HTML elements
-const initializePage = (req, res) => {
-  console.log("hi");
-}
-*/
-
 //get all list
 const getLists = (req, res) => {
-  const allList = Object(res.app.locals.reactions);
+  const allList = Object(res.app.locals.todo);
   console.log(allList);
 
   res.status(200).send(allList);
@@ -19,17 +12,17 @@ const getLists = (req, res) => {
 //post a new request to do todo list
 const addToDo = (req, res) => {
 
-  console.log(req);
+
   //const data = {title: req.body.title}
   const data = req.body.title;
   const dataJson = {title: req.body.title}
-  console.log(data);
+  //console.log(data);
 
-  res.app.locals.reactions["todo"].push(data);
-  //console.log(res.app.locals.reactions);
+  res.app.locals.todo["todo"].push(data);
+  //console.log(res.app.locals.todo);
 
   //stringify the object, so it is able to write the file.
-  const newList = res.app.locals.reactions;
+  const newList = res.app.locals.todo;
   const stringList = JSON.stringify(newList);
   //console.log(stringList);
 
@@ -41,6 +34,7 @@ const addToDo = (req, res) => {
   });
 
   res.status(201).send(dataJson);
+  //.json
 
 }
 
@@ -66,7 +60,8 @@ const main = () => {
     .then((fileContents) => JSON.parse(fileContents))
     .then((data) => {
 
-      app.locals.reactions = data;
+      //console.log(data);
+      app.locals.todo = data;
 
       app.listen(port, () => {
         console.log(`Reaction gifs started on http://localhost:${port}`);
